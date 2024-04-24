@@ -34,10 +34,10 @@ insertar :: Char -> Linea -> Linea
 insertar c linea = linea {caracteres = insertarEn c (caracteres linea) (cursor linea), cursor = cursor linea + 1}
 
 borrarEn :: String -> Int -> String
-borrarEn xs 0 = xs
-borrarEn (x:xs) pos = x : borrarEn xs (pos - 1)  
-
+borrarEn linea pos
+    | pos >= 0 && pos < length linea = take pos linea ++ drop (pos + 1) linea
+    | otherwise = linea  
+ 
 borrar :: Linea -> Linea
-borrar linea = linea {caracteres = borrarEn (caracteres linea) (cursor linea), cursor = cursor linea - 1}
-
+borrar linea = linea {caracteres = borrarEn (caracteres linea) (cursor linea)}
 
