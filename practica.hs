@@ -12,8 +12,6 @@ unzip' xs = foldr (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([],[]) xs
 pair2List :: (a, [b]) -> [(a, b)]
 pair2List (x, xs) = foldr (\y acc -> (x, y) : acc) [] xs
 
---maxSec funcion
-
 maxP :: (Int, Int) -> Int
 maxP (x, y) = if (x > y) then x else y
 
