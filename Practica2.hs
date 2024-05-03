@@ -63,3 +63,20 @@ isEmptyCl _ = False
 isCUnitCL :: CList a -> Bool
 isCUnitCL (CUnit a) = True
 isCUnitCL _ = False
+
+--b)
+reverseCL :: CList a -> CList a
+reverseCL EmptyCL = EmptyCL
+reverseCL (CUnit a) = CUnit a
+reverseCL (Consnoc a b c) = Consnoc c (reverseCL b) a
+
+--e)
+concatCL :: CList (CList a) -> CList a
+concatCL EmptyCL = EmptyCL
+concatCL (CUnit xs) = xs
+concatCL (Consnoc xs ys zs) = snocCL (concatCL ys) zs
+
+appendCL :: CList (CList a) -> CList a -> CList a
+appendCL EmptyCL xs = xs
+appendCL (CUnit xs) ys = (Consnoc xs EmptyCL ys)
+appendCL (Consnoc xs ys zs) ws = (Consnoc xs (appendCL ys zs) ws) 
