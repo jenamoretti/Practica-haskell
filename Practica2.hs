@@ -41,3 +41,25 @@ borrarEn linea pos
 borrar :: Linea -> Linea
 borrar linea = linea {caracteres = borrarEn (caracteres linea) (cursor linea)}
 
+data CList a = EmptyCL | CUnit a | Consnoc a (CList a) a deriving (Show, Eq)
+
+headCl :: CList a -> a
+headCl (CUnit a) = a
+headCl (Consnoc a b c) = a
+
+snocCL :: CList a -> a -> CList a
+snocCL EmptyCL a = CUnit a
+snocCL (CUnit a) b = Consnoc a EmptyCL b
+snocCL (Consnoc a b c) d = Consnoc a (snocCL b c) d
+
+tailCl :: CList a -> CList a
+tailCl (CUnit a) = EmptyCL
+tailCl (Consnoc a b c) = snocCL b c
+
+isEmptyCl :: CList a -> Bool
+isEmptyCl EmptyCL = True
+isEmptyCl _ = False
+
+isCUnitCL :: CList a -> Bool
+isCUnitCL (CUnit a) = True
+isCUnitCL _ = False
