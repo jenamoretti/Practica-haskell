@@ -100,3 +100,19 @@ seval (Div a b) = do
     if y == 0
         then Nothing
         else Just (x `div` y)
+
+data BST a = Empty | Node a (BST a) (BST a) deriving (Show, Eq)
+
+maximun :: BST a -> a
+maximun (Node x _ Empty) = x
+maximun (Node _ _ y) = maximun y
+
+minimun :: BST a -> a
+minimun (Node x Empty _) = x
+minimun (Node _ left _) = minimun left
+
+checkBST :: (Ord a) => BST a -> Bool
+checkBST (Node a left right)
+    | (maximun left) > a = False
+    | (minimun right) < a = False
+    | otherwise = True
