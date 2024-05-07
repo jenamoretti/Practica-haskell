@@ -80,3 +80,23 @@ appendCL :: CList (CList a) -> CList a -> CList a
 appendCL EmptyCL xs = xs
 appendCL (CUnit xs) ys = (Consnoc xs EmptyCL ys)
 appendCL (Consnoc xs ys zs) ws = (Consnoc xs (appendCL ys zs) ws) 
+
+data Aexp = Num Int | Prod Aexp Aexp | Div Aexp Aexp deriving (Show, Eq)
+
+eval :: Aexp -> Int
+eval (Num n) = n
+eval (Prod a b) = (eval a) * (eval b)
+eval (Div a b) = (eval a) `div` (eval b)
+
+seval :: Aexp -> Maybe Int
+seval (Num n) = Just n
+seval (Prod a b) = do
+    x <- seval a
+    y <- seval b
+    Just (x * y)
+seval (Div a b) = do
+    x <- seval a
+    y <- seval b
+    if y == 0
+        then Nothing
+        else Just (x `div` y)
