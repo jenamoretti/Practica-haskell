@@ -116,3 +116,29 @@ checkBST (Node a left right)
     | (maximun left) > a = False
     | (minimun right) < a = False
     | otherwise = True
+
+    --practica Complementaria ->
+
+    data Nat = Cero | Succ Nat deriving (Show, Eq)
+
+int2Nat :: Int -> Nat
+int2Nat 0 = Cero
+int2Nat x = Succ (int2Nat (x - 1))
+
+suma :: Nat -> Nat -> Nat
+suma x Cero = x
+suma x (Succ y) = Succ (suma x y)   
+
+nat2Int :: Nat -> Int
+nat2Int Cero = 0
+nat2Int (Succ x) = (nat2Int x) + 1
+
+data Arb = E | H Int | N Arb Arb deriving (Show, Eq)
+
+data Cmd = L | R deriving (Show, Eq)
+
+select :: [Cmd] -> Arb -> Arb
+select _ (H x) = H x
+select (x:xs) (N left right)
+    | x == L = select xs left
+    | otherwise = select xs right
